@@ -46,6 +46,7 @@ def PredictCrop():
         crop_name = NB_model.predict(new_df)[0]
         #Return crop name
         print(crop_name.title())
+        # return recommended soil moisture level
         #https://api.thingspeak.com/channels/1026655/feeds.json?api_key=AA58RVXIO5E9T336&results=2
         return crop_name.title()
     except Exception as e:
@@ -144,6 +145,7 @@ def FertRecommend():
         string+='K value is in optimum condition. Incase you add fertilizers, please add N-P-0'
     
     return string   
+
 
 
 @app.route('/',methods=['GET'])
