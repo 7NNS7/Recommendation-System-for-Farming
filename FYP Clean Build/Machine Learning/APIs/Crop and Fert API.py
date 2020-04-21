@@ -5,6 +5,7 @@ import pickle
 import pandas as pd
 from datetime import datetime
 import random
+import json
 app = flask.Flask(__name__)
 
 logging.basicConfig(filename = 'FlaskApp.log',level = logging.INFO)
@@ -27,7 +28,9 @@ def PredictCrop():
         
         
         '''
-        
+        a['N'] = 80
+        a['P'] = 60 
+        a['K'] = 60
         temperature = random.randint(15,55)
         humidity = random.randint(15,70)
         ph = float(random.uniform(4.5,7.25))
@@ -45,10 +48,18 @@ def PredictCrop():
         global crop_name
         crop_name = NB_model.predict(new_df)[0]
         #Return crop name
-        print(crop_name.title())
+        df = pd.read_csv('../Datasets/FertilizerData.csv')
+        #print(crop_name)
+        soil_moisture = df[df['Crop']==crop_name]['soil_moisture'].iloc[0]
+        #print(soil_moisture)
+        crop_name = crop_name.title()
+        
+        response = {'crop': crop_name, 'soil_mositure' :str(soil_moisture)}
+        #print(response)
         # return recommended soil moisture level
         #https://api.thingspeak.com/channels/1026655/feeds.json?api_key=AA58RVXIO5E9T336&results=2
-        return crop_name.title()
+        return json.dumps(response)
+        
     except Exception as e:
         return "Caught err "+str(e)
 
