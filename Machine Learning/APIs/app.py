@@ -164,4 +164,4 @@ def hello():
     return "Process is up and runnning."
 
 
-app.run(port = 5555)
+app.run(port = 5555,host = "0.0.0.0")
