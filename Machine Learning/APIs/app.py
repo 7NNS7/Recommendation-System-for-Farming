@@ -6,39 +6,37 @@ import pandas as pd
 from datetime import datetime
 import random
 import json
+import requests
 app = flask.Flask(__name__)
-
 logging.basicConfig(filename = 'FlaskApp.log',level = logging.INFO)
 crop_name = ""
-#Create subprocess and call the other function to generate images
+N,P,K,ph = 0,0,0,0
 @app.route('/crop',methods = ['GET'])
 def PredictCrop():
     try:
         random.seed(datetime.now())
-        #print("inside")
-        # print(flask.request.headers)
-        #req_data=flask.request.get_json()
+        url = "https://api.thingspeak.com/channels/1026655/feeds.json?api_key=AA58RVXIO5E9T336&results=2"
+        response = requests.get(url)
+        data = json.loads(response.content)
+        global N,P,K,ph
+        N = data['feeds'][1]["field1"]
+        P = data['feeds'][1]["field2"]
+        K = data['feeds'][1]["field3"]
+        ph = data['feeds'][1]["field4"]
+        #temp = data['feeds'][1]["field5"]
+        #hum = data['feeds'][1]["field6"]
+        temp = 30
+        hum = 40
+        print(N,P,K,ph,temp,hum)
+        #Rainfall from csv
+        #Assuming rainfall is constant throughout Karnataka
+        rainfall = 120
         a = {}
-        #API call from shivu to get temp and humidity
-        '''
-        import requests
-        
-        
-        
-        
-        
-        '''
-        a['N'] = 80
-        a['P'] = 60 
-        a['K'] = 60
-        temperature = random.randint(15,55)
-        humidity = random.randint(15,70)
-        ph = float(random.uniform(4.5,7.25))
-        rainfall = float(random.uniform(100,130))
-        a['temperature']= temperature
-        a['humidity'] = humidity
-        '''   a['ph'] = float(req_data['pH'])
-        a['rainfall'] = req_data['rainfall']'''
+        a['N'] = N
+        a['P'] = P 
+        a['K'] = K
+        a['temperature']= temp
+        a['humidity'] = hum
         a['ph'] = ph
         a['rainfall'] = rainfall
         new_df = pd.DataFrame(a, columns = ['N','P','K','temperature','humidity','ph','rainfall'],index = [0])
@@ -55,9 +53,6 @@ def PredictCrop():
         crop_name = crop_name.title()
         
         response = {'crop': crop_name, 'soil_mositure' :str(soil_moisture)}
-        #print(response)
-        # return recommended soil moisture level
-        #https://api.thingspeak.com/channels/1026655/feeds.json?api_key=AA58RVXIO5E9T336&results=2
         return json.dumps(response)
         
     except Exception as e:
@@ -65,31 +60,26 @@ def PredictCrop():
 
 @app.route('/fertilizer',methods = ['GET'])
 def FertRecommend():
-    #req_data=flask.request.get_json()
-    #CALL SHIVU'S API
-    '''ns = req_data['N']
-    ps = req_data['P']
-    ks = req_data['K']
-    pHs = req_data['pH']'''
+    print("Inside")
     global crop_name
+    print(crop_name)
     crop = crop_name
-    #Get NPK values from data set as nr,pr,kr,phr
     try:
         df = pd.read_csv('../Datasets/FertilizerData.csv')
-        values = df[df['crop'] == crop]
-        nr = values['N'][0]
-        pr = values['P'][0]
-        kr = values ['K'][0]
+        #values = df[df['crop'] == crop]
+        nr = df[df['Crop']==crop_name]['N'].iloc[0]
+        pr = df[df['Crop']==crop_name]['P'].iloc[0]
+        kr = df[df['Crop']==crop_name]['K'].iloc[0]
     except:
         nr = 80
         pr = 40
         kr = 40
         pHr = 5.5
-    reco = max(n,p,k,pH)
-    ''' n = nr - ns
-    p = pr - ps
-    k = kr - ks
-    pH = pHr - pHs'''
+    global N,P,K
+    n = nr - N
+    p = pr - P
+    k = kr - K
+    pH = pHr - pH
     string = ""
     if pH > 0 :
         string+="""\n\n The ph value of your soil is low.\n\n Please consider the following suggestions.\n\n
@@ -164,4 +154,4 @@ def hello():
     return "Process is up and runnning."
 
 
-app.run(port = 5555,host = "0.0.0.0")
+app.run(port = 5555)
