@@ -57,7 +57,7 @@ def PredictCrop():
         #print(soil_moisture)
         crop_name = crop_name.title()
         
-        response = {'crop': crop_name, 'soil_mositure' :str(soil_moisture)}
+        response = {'crop': str(crop_name), 'soil_mositure' :str(soil_moisture)}
         return json.dumps(response)
         
     except Exception as e:
