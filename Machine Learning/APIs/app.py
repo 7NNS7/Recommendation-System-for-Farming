@@ -57,7 +57,8 @@ def PredictCrop():
         crop_name = crop_name.title()
         
         response = {'crop': str(crop_name), 'soil_mositure' :str(soil_moisture)}
-        return json.dumps(response)
+        print(response)
+        return str(json.dumps(response))
         
     except Exception as e:
         return "Caught err "+str(e)
