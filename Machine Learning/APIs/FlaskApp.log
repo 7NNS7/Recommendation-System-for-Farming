@@ -1,0 +1,4 @@
+INFO:werkzeug: * Running on http://127.0.0.1:5555/ (Press CTRL+C to quit)
+INFO:werkzeug:127.0.0.1 - - [25/Apr/2020 23:46:20] "[37mGET / HTTP/1.1[0m" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Apr/2020 23:47:04] "[37mGET / HTTP/1.1[0m" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Apr/2020 23:56:10] "[37mGET / HTTP/1.1[0m" 200 -
