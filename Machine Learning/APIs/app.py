@@ -10,7 +10,7 @@ import requests
 from flask_cors import CORS
 
 app = flask.Flask(__name__)
-#CORS(app)
+CORS(app)
 logging.basicConfig(filename = 'FlaskApp.log',level = logging.INFO)
 crop_name = ""
 #N,P,K,ph = 0,0,0,0
@@ -18,7 +18,6 @@ crop_name = ""
 @app.route('/crop',methods = ['GET'])
 def PredictCrop():
     try:
-        print("Inside")
         random.seed(datetime.now())
         url = "https://api.thingspeak.com/channels/1026655/feeds.json?api_key=AA58RVXIO5E9T336&results=2"
         response = requests.get(url)
