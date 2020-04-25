@@ -8,28 +8,31 @@ import random
 import json
 import requests
 from flask_cors import CORS
+
 app = flask.Flask(__name__)
-CORS(app)
+#CORS(app)
 logging.basicConfig(filename = 'FlaskApp.log',level = logging.INFO)
 crop_name = ""
-N,P,K,ph = 0,0,0,0
+#N,P,K,ph = 0,0,0,0
+
 @app.route('/crop',methods = ['GET'])
 def PredictCrop():
     try:
+        print("Inside")
         random.seed(datetime.now())
         url = "https://api.thingspeak.com/channels/1026655/feeds.json?api_key=AA58RVXIO5E9T336&results=2"
         response = requests.get(url)
         data = json.loads(response.content)
         global N,P,K,ph
-        N = data['feeds'][1]["field1"]
-        P = data['feeds'][1]["field2"]
-        K = data['feeds'][1]["field3"]
-        ph = data['feeds'][1]["field4"]
+        N = float(data['feeds'][1]["field1"])
+        P = float(data['feeds'][1]["field2"])
+        K = float(data['feeds'][1]["field3"])
+        ph = float(data['feeds'][1]["field4"])
         #temp = data['feeds'][1]["field5"]
         #hum = data['feeds'][1]["field6"]
         temp = 30
         hum = 40
-        print(N,P,K,ph,temp,hum)
+        #print(N,P,K,ph,temp,hum)
         #Rainfall from csv
         #Assuming rainfall is constant throughout Karnataka
         rainfall = 120
@@ -76,7 +79,7 @@ def FertRecommend():
         nr = 80
         pr = 40
         kr = 40
-        pHr = 5.5
+        pH = 5.5
     global N,P,K
     n = nr - N
     p = pr - P
@@ -156,4 +159,4 @@ def hello():
     return "Process is up and runnning."
 
 
-app.run(port = 5555)
+app.run(port = 5555,host = "0.0.0.0")
