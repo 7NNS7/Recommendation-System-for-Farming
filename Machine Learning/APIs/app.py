@@ -7,7 +7,9 @@ from datetime import datetime
 import random
 import json
 import requests
+from flask_cors import CORS
 app = flask.Flask(__name__)
+CORS(app)
 logging.basicConfig(filename = 'FlaskApp.log',level = logging.INFO)
 crop_name = ""
 N,P,K,ph = 0,0,0,0
