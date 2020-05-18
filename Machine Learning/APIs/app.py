@@ -66,9 +66,8 @@ def PredictCrop():
 
 @app.route('/fertilizer',methods = ['GET'])
 def FertRecommend():
-    print("Inside")
     global crop_name
-    print(crop_name)
+    #print(crop_name)
     crop = crop_name
     try:
         df = pd.read_csv('../Datasets/FertilizerData.csv')
@@ -86,9 +85,24 @@ def FertRecommend():
     p = pr - P
     k = kr - K
     #pH = pHr - pH
-    max_value = {abs(n) : "N",abs(p) : "P", abs(k) :"K"}
-    if 
-    a = max(abs(n),abs(p),abs(k))
+    temp = {abs(n) : "N",abs(p) : "P", abs(k) :"K"}
+    max_value = temp[max(temp.keys())]
+    if max_value == "N":
+        if n < 0 : 
+            key = 'NHigh'
+        else :
+            key = "Nlow"
+    elif max_value == "P":
+        if p < 0 : 
+            key = 'PHigh'
+        else :
+            key = "Plow"
+    else :
+        if k < 0 : 
+            key = 'KHigh'
+        else :
+            key = "Klow"
+
     d = {
     'Nhigh':"""The N value of soil is high and might give rise to weeds. Please consider the following suggestions.\n1. Manure – adding manure is one of the simplest ways to amend your soil with nitrogen. Be careful as there are various types of manures with varying degrees of nitrogen.
     2. Coffee grinds – use your morning addiction to feed your gardening habit! Coffee grinds are considered a green compost material which is rich in nitrogen. Once the grounds break down, your soil will be fed with delicious, delicious nitrogen. An added benefit to including coffee grounds to your soil is while it will compost, it will also help provide increased drainage to your soil.
@@ -130,7 +144,7 @@ def FertRecommend():
     }
 
 
-    return string   
+    return d[key]   
 
 
 
