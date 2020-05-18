@@ -2,3 +2,50 @@ INFO:werkzeug: * Running on http://127.0.0.1:5555/ (Press CTRL+C to quit)
 INFO:werkzeug:127.0.0.1 - - [25/Apr/2020 23:46:20] "[37mGET / HTTP/1.1[0m" 200 -
 INFO:werkzeug:127.0.0.1 - - [25/Apr/2020 23:47:04] "[37mGET / HTTP/1.1[0m" 200 -
 INFO:werkzeug:127.0.0.1 - - [25/Apr/2020 23:56:10] "[37mGET / HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Running on http://127.0.0.1:5555/ (Press CTRL+C to quit)
+INFO:werkzeug:127.0.0.1 - - [26/Apr/2020 00:18:00] "[37mGET / HTTP/1.1[0m" 200 -
+INFO:werkzeug:127.0.0.1 - - [26/Apr/2020 00:18:06] "[37mGET /crop HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Running on http://127.0.0.1:5555/ (Press CTRL+C to quit)
+INFO:werkzeug:127.0.0.1 - - [26/Apr/2020 00:19:49] "[37mGET /crop HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Running on http://127.0.0.1:5555/ (Press CTRL+C to quit)
+INFO:werkzeug:127.0.0.1 - - [26/Apr/2020 00:21:12] "[37mGET /crop HTTP/1.1[0m" 200 -
+INFO:werkzeug:127.0.0.1 - - [26/Apr/2020 00:22:01] "[37mGET / HTTP/1.1[0m" 200 -
+INFO:werkzeug:127.0.0.1 - - [26/Apr/2020 00:22:15] "[37mGET /crop HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Running on http://127.0.0.1:5555/ (Press CTRL+C to quit)
+INFO:werkzeug:127.0.0.1 - - [26/Apr/2020 00:22:57] "[37mGET /crop HTTP/1.1[0m" 200 -
+INFO:werkzeug:127.0.0.1 - - [26/Apr/2020 00:23:05] "[37mGET / HTTP/1.1[0m" 200 -
+INFO:werkzeug:127.0.0.1 - - [26/Apr/2020 00:23:14] "[37mGET /crop HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Running on http://127.0.0.1:5555/ (Press CTRL+C to quit)
+INFO:werkzeug:127.0.0.1 - - [26/Apr/2020 00:23:42] "[37mGET /crop HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Running on http://127.0.0.1:5555/ (Press CTRL+C to quit)
+INFO:werkzeug: * Running on http://0.0.0.0:5555/ (Press CTRL+C to quit)
+INFO:werkzeug:127.0.0.1 - - [26/Apr/2020 00:24:37] "[37mGET /crop HTTP/1.1[0m" 200 -
+INFO:werkzeug:127.0.0.1 - - [26/Apr/2020 00:24:44] "[37mGET /crop HTTP/1.1[0m" 200 -
+INFO:werkzeug:127.0.0.1 - - [26/Apr/2020 00:24:51] "[37mGET / HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Running on http://0.0.0.0:5555/ (Press CTRL+C to quit)
+INFO:werkzeug:127.0.0.1 - - [26/Apr/2020 00:25:30] "[37mGET / HTTP/1.1[0m" 200 -
+INFO:werkzeug:127.0.0.1 - - [26/Apr/2020 00:25:45] "[37mGET /crop HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Running on http://0.0.0.0:5555/ (Press CTRL+C to quit)
+INFO:werkzeug:127.0.0.1 - - [26/Apr/2020 00:27:00] "[37mGET /crop HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Running on http://0.0.0.0:5555/ (Press CTRL+C to quit)
+INFO:werkzeug:127.0.0.1 - - [26/Apr/2020 00:27:42] "[37mGET /crop HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Running on http://0.0.0.0:5555/ (Press CTRL+C to quit)
+INFO:werkzeug:127.0.0.1 - - [26/Apr/2020 00:27:55] "[37mGET /crop HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Running on http://0.0.0.0:5555/ (Press CTRL+C to quit)
+INFO:werkzeug:127.0.0.1 - - [26/Apr/2020 00:29:46] "[37mGET /crop HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Running on http://0.0.0.0:5555/ (Press CTRL+C to quit)
+INFO:werkzeug:127.0.0.1 - - [26/Apr/2020 00:30:27] "[37mGET /crop HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Running on http://0.0.0.0:5555/ (Press CTRL+C to quit)
+INFO:werkzeug:127.0.0.1 - - [26/Apr/2020 00:31:25] "[37mGET /crop HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Running on http://0.0.0.0:5555/ (Press CTRL+C to quit)
+INFO:werkzeug:127.0.0.1 - - [26/Apr/2020 00:31:52] "[37mGET /crop HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Running on http://0.0.0.0:5555/ (Press CTRL+C to quit)
+INFO:werkzeug:127.0.0.1 - - [26/Apr/2020 00:33:20] "[37mGET /crop HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Running on http://0.0.0.0:5555/ (Press CTRL+C to quit)
+INFO:werkzeug:127.0.0.1 - - [26/Apr/2020 00:40:00] "[37mGET /crop HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Running on http://0.0.0.0:5555/ (Press CTRL+C to quit)
+INFO:werkzeug:127.0.0.1 - - [26/Apr/2020 00:49:17] "[37mGET /crop HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Running on http://0.0.0.0:5555/ (Press CTRL+C to quit)
+INFO:werkzeug:127.0.0.1 - - [26/Apr/2020 01:12:07] "[37mGET /crop HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Running on http://0.0.0.0:5555/ (Press CTRL+C to quit)
+INFO:werkzeug:127.0.0.1 - - [26/Apr/2020 01:14:44] "[37mGET /crop HTTP/1.1[0m" 200 -
