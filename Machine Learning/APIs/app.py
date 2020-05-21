@@ -11,9 +11,12 @@ from flask_cors import CORS
 
 app = flask.Flask(__name__)
 CORS(app)
+#Setting log for flask app
 logging.basicConfig(filename = 'FlaskApp.log',level = logging.INFO)
 crop_name = ""
-#N,P,K,ph = 0,0,0,0
+
+#API to return the recommended crop
+#Please note that this api must be called before the fertilizer api is called.
 
 @app.route('/crop',methods = ['GET'])
 def PredictCrop():
@@ -31,8 +34,6 @@ def PredictCrop():
         #hum = data['feeds'][1]["field6"]
         temp = 30
         hum = 40
-        #print(N,P,K,ph,temp,hum)
-        #Rainfall from csv
         #Assuming rainfall is constant throughout Karnataka
         rainfall = 120
         a = {}
@@ -79,12 +80,10 @@ def FertRecommend():
         nr = 80
         pr = 40
         kr = 40
-        #pH = 5.5
     global N,P,K
     n = nr - N
     p = pr - P
     k = kr - K
-    #pH = pHr - pH
     temp = {abs(n) : "N",abs(p) : "P", abs(k) :"K"}
     max_value = temp[max(temp.keys())]
     if max_value == "N":
@@ -143,14 +142,13 @@ def FertRecommend():
       """
     }
 
-
     return d[key]   
 
 
 
 @app.route('/',methods=['GET'])
 def hello():
-    return "Process is up and runnning."
+    return "Super Awesome code is running in the background!!"
 
 
 app.run(port = 5555,host = "0.0.0.0")
