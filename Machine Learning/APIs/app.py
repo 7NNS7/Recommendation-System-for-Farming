@@ -15,11 +15,10 @@ CORS(app)
 logging.basicConfig(filename = 'FlaskApp.log',level = logging.INFO)
 crop_name = ""
 
-#API to return the recommended crop
-#Please note that this api must be called before the fertilizer api is called.
 
-@app.route('/crop',methods = ['GET'])
-def PredictCrop():
+
+#Function to recommend the crop
+def return_crop():
     try:
         random.seed(datetime.now())
         url = "https://api.thingspeak.com/channels/1026655/feeds.json?api_key=AA58RVXIO5E9T336&results=2"
@@ -50,26 +49,28 @@ def PredictCrop():
         NB_model = pickle.load(NB_pkl)
         global crop_name
         crop_name = NB_model.predict(new_df)[0]
+        crop_name = crop_name.title()
+        return crop_name
+     except Exception as e:
+        return "Caught err "+str(e)
+
+#API to return the recommended crop
+@app.route('/crop',methods = ['GET'])
+def PredictCrop():
+        crop_name = return_crop()
         #Return crop name
         df = pd.read_csv('../Datasets/FertilizerData.csv')
         #print(crop_name)
         soil_moisture = df[df['Crop']==crop_name]['soil_moisture'].iloc[0]
         #print(soil_moisture)
-        crop_name = crop_name.title()
-        
         response = {'crop': str(crop_name), 'soil_mositure' :str(soil_moisture)}
         response = json.dumps(response)
         #print(type(response))
         return response
         
-    except Exception as e:
-        return "Caught err "+str(e)
-
 @app.route('/fertilizer',methods = ['GET'])
 def FertRecommend():
-    global crop_name
-    #print(crop_name)
-    crop = crop_name
+    crop = return_crop()
     try:
         df = pd.read_csv('../Datasets/FertilizerData.csv')
         #values = df[df['crop'] == crop]
@@ -141,9 +142,10 @@ def FertRecommend():
     • Try Sul-Po-Mag
       """
     }
-
-    return d[key]   
-
+    response = {'fertilizer': str(d[key])}  
+    response = json.dumps(response)
+    #print(type(response))
+    return response
 
 
 @app.route('/',methods=['GET'])
