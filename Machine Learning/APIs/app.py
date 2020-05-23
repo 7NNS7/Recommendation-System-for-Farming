@@ -24,15 +24,19 @@ def return_crop():
         url = "https://api.thingspeak.com/channels/1026655/feeds.json?api_key=AA58RVXIO5E9T336&results=2"
         response = requests.get(url)
         data = json.loads(response.content)
+        #print(data)
         global N,P,K,ph
-        N = float(data['feeds'][1]["field1"])
-        P = float(data['feeds'][1]["field2"])
-        K = float(data['feeds'][1]["field3"])
-        ph = float(data['feeds'][1]["field4"])
-        #temp = data['feeds'][1]["field5"]
-        #hum = data['feeds'][1]["field6"]
-        temp = 30
-        hum = 40
+        try:
+            N = float(data['feeds'][1]["field1"])
+            P = float(data['feeds'][1]["field2"])
+            K = float(data['feeds'][1]["field3"])
+            ph = float(data['feeds'][1]["field4"])
+            temp = data['feeds'][1]["field5"]
+            hum = data['feeds'][1]["field6"]
+        except:
+            N,P,K,ph = 80,60,60,5.5
+            temp = 30
+            hum = 40
         #Assuming rainfall is constant throughout Karnataka
         rainfall = 120
         a = {}
@@ -44,28 +48,26 @@ def return_crop():
         a['ph'] = ph
         a['rainfall'] = rainfall
         new_df = pd.DataFrame(a, columns = ['N','P','K','temperature','humidity','ph','rainfall'],index = [0])
+        #print(new_df)
         NB_pkl_filename = 'NBClassifier.pkl'
         NB_pkl = open(NB_pkl_filename, 'rb')
         NB_model = pickle.load(NB_pkl)
         global crop_name
         crop_name = NB_model.predict(new_df)[0]
-        crop_name = crop_name.title()
-        return crop_name
-     except Exception as e:
+        #print(crop_name)
+        return str(crop_name)
+    except Exception as e:
         return "Caught err "+str(e)
 
 #API to return the recommended crop
 @app.route('/crop',methods = ['GET'])
 def PredictCrop():
         crop_name = return_crop()
-        #Return crop name
         df = pd.read_csv('../Datasets/FertilizerData.csv')
-        #print(crop_name)
         soil_moisture = df[df['Crop']==crop_name]['soil_moisture'].iloc[0]
-        #print(soil_moisture)
+        crop_name = crop_name.title()
         response = {'crop': str(crop_name), 'soil_mositure' :str(soil_moisture)}
         response = json.dumps(response)
-        #print(type(response))
         return response
         
 @app.route('/fertilizer',methods = ['GET'])
@@ -73,7 +75,6 @@ def FertRecommend():
     crop = return_crop()
     try:
         df = pd.read_csv('../Datasets/FertilizerData.csv')
-        #values = df[df['crop'] == crop]
         nr = df[df['Crop']==crop_name]['N'].iloc[0]
         pr = df[df['Crop']==crop_name]['P'].iloc[0]
         kr = df[df['Crop']==crop_name]['K'].iloc[0]
