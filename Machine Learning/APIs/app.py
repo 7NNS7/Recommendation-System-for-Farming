@@ -66,9 +66,10 @@ def return_crop():
 def PredictCrop():
         crop_name = return_crop()
         df = pd.read_csv('../Datasets/FertilizerData.csv')
-        soil_moisture = df[df['Crop']==crop_name]['soil_moisture'].iloc[0]
+        temp = df[df['Crop']==crop_name]['soil_moisture']
+        soil_moisture = temp.iloc[0]
         crop_name = crop_name.title()
-        response = {'crop': str(crop_name), 'soil_mositure' :str(soil_moisture)}
+        response = {'crop': str(crop_name), 'soil_moisture' :str(soil_moisture)}
         response = json.dumps(response)
         return response
         
