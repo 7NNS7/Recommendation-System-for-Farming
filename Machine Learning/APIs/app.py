@@ -15,14 +15,6 @@ CORS(app)
 logging.basicConfig(filename = 'FlaskApp.log',level = logging.INFO)
 crop_name = ""
 
-
-
-#Function to recommend the crop
-def return_crop():
-    try:
-        
-
-
 #API to return the recommended crop
 @app.route('/crop',methods = ['GET'])
 def PredictCrop():
