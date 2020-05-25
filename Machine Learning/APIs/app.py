@@ -20,6 +20,13 @@ crop_name = ""
 #Function to recommend the crop
 def return_crop():
     try:
+        
+
+
+#API to return the recommended crop
+@app.route('/crop',methods = ['GET'])
+def PredictCrop():
+    try:
         random.seed(datetime.now())
         url = "https://api.thingspeak.com/channels/1026655/feeds.json?api_key=AA58RVXIO5E9T336&results=2"
         response = requests.get(url)
@@ -57,14 +64,6 @@ def return_crop():
         global crop_name
         crop_name = NB_model.predict(new_df)[0]
         #print(crop_name)
-        return str(crop_name)
-    except Exception as e:
-        return "Caught err "+str(e)
-
-#API to return the recommended crop
-@app.route('/crop',methods = ['GET'])
-def PredictCrop():
-        crop_name = return_crop()
         df = pd.read_csv('../Datasets/FertilizerData.csv')
         temp = df[df['Crop']==crop_name]['soil_moisture']
         soil_moisture = temp.iloc[0]
@@ -72,10 +71,12 @@ def PredictCrop():
         response = {'crop': str(crop_name), 'soil_moisture' :str(soil_moisture)}
         response = json.dumps(response)
         return response
+    except Exception as e:
+        return "Caught err "+str(e)
         
 @app.route('/fertilizer',methods = ['GET'])
 def FertRecommend():
-    crop = return_crop()
+    global crop_name
     try:
         df = pd.read_csv('../Datasets/FertilizerData.csv')
         nr = df[df['Crop']==crop_name]['N'].iloc[0]
