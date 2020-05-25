@@ -35,8 +35,10 @@ def return_crop():
             hum = data['feeds'][1]["field6"]
         except:
             N,P,K,ph = 80,60,60,5.5
+        #print(temp,hum)
+        if temp or hum is None :
             temp = 30
-            hum = 40
+            hum = 40    
         #Assuming rainfall is constant throughout Karnataka
         rainfall = 120
         a = {}
