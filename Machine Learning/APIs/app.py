@@ -21,20 +21,28 @@ def PredictCrop():
     try:
         random.seed(datetime.now())
         url = "https://api.thingspeak.com/channels/1026655/feeds.json?api_key=AA58RVXIO5E9T336&results=2"
+        humidity_url = "http://blynk-cloud.com/TtGVPcqUUMtN8vr1xqU680Fv0TXxHEUm/get/V7"
+        temperature_url = "http://blynk-cloud.com/TtGVPcqUUMtN8vr1xqU680Fv0TXxHEUm/get/V8"
         response = requests.get(url)
         data = json.loads(response.content)
-        #print(data)
         global N,P,K,ph
         try:
             N = float(data['feeds'][1]["field1"])
             P = float(data['feeds'][1]["field2"])
             K = float(data['feeds'][1]["field3"])
             ph = float(data['feeds'][1]["field4"])
-            temp = data['feeds'][1]["field5"]
-            hum = data['feeds'][1]["field6"]
+            #temp = data['feeds'][1]["field5"]
+            #hum = data['feeds'][1]["field6"]
         except:
             N,P,K,ph = 80,60,60,5.5
         #print(temp,hum)
+        try:
+            response = requests.url(humidity_url)
+            hum = response[0]
+            response = requests.url(temperature_url)
+            temp = response[0]
+        except:
+            temp,hum = 30,40
         if temp or hum is None :
             temp = 30
             hum = 40    
@@ -55,14 +63,13 @@ def PredictCrop():
         NB_model = pickle.load(NB_pkl)
         global crop_name
         crop_name = NB_model.predict(new_df)[0]
-        #print(crop_name)
         df = pd.read_csv('../Datasets/FertilizerData.csv')
         temp = df[df['Crop']==crop_name]['soil_moisture']
         soil_moisture = temp.iloc[0]
         crop_name = crop_name.title()
         response = {'crop': str(crop_name), 'soil_moisture' :str(soil_moisture)}
         response = json.dumps(response)
-        return response
+        return str(response)
     except Exception as e:
         return "Caught err "+str(e)
         
