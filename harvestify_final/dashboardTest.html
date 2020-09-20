@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+ 	<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+		
+		<title>Harvestify - Dashboard</title>
+		
+    <!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="assets/bootstrap/bootstrap4-alpha3.min.css">
+		<!-- Google Font Roboto -->
+		<link rel="stylesheet" href="assets/fonts/font-roboto.css">
+		
+		<style>	
+			body {
+				background-color: #000000;
+				color: #ffffff;
+				font-family: "Roboto", Helvetica, Arial, sans-serif;
+				font-size: 16px;
+				line-height: 1.5;
+				padding-bottom: 3.5rem;
+				padding-top: 3.5rem;
+			}
+
+			h1, h2, h3, h4, h5, h6 {
+				font-weight: 300;
+			}
+
+			hr {
+				border-top: 1px solid #727273;
+				margin-bottom: 2rem;
+				margin-top: 2rem;
+			}
+			
+			
+input[type=text], select {
+  width: 40%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  width: 40%;
+  background-color: red;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px ;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #a33535;
+}
+
+
+		</style>
+		
+		<!-- Scripts -->
+		<script src="assets/jquery/jquery-3.1.0.min.js"></script>
+		<script src="assets/tether/tether.min.js"></script>
+		<script src="assets/bootstrap/bootstrap4-alpha3.min.js"></script>
+		<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+		<script src="assets/jquery.scrollspeed/jquery.scrollspeed.min.js"></script>
+		<script src="assets/jquery.inview/jquery.inview.min.js"></script>
+		
+		<script>
+			var methane;
+			var co;
+			var smoke;
+			var temp;
+			var voltage;
+			var moisture;
+			
+            
+            $(function () {
+			var x;
+			var y;
+setInterval(() => {
+	timer();
+	
+  }, 1000);
+  function timer() {
+	$.ajax({
+	  url: 'https://api.thingspeak.com/channels/875168/feeds.json?api_key=4MX75FAP0HO8Z4WX&results=2',
+	  type: 'GET',
+	  dataType: "json",
+	  success: displayAll
+	});
+  
+	function displayAll(data) {
+
+		methane = JSON.parse(data["feeds"]["0"]["field1"]);			//	Number(data["feeds"]["0"]["field1"]);
+		co = Number(data["feeds"]["0"]["field2"]);
+		smoke = Number(data["feeds"]["0"]["field3"]);
+	    voltage = data["feeds"]["0"]["field4"];
+		moisture = Number(data["feeds"]["0"]["field5"]);
+		temp = 32;
+	
+	}}	
+
+		
+	/*			var salesDoughnutChartUS = new CanvasJS.Chart("sales-doughnut-chart-us", { 
+					animationEnabled: true,
+					backgroundColor: "transparent",
+					title: {
+						fontColor: "#848484",
+						fontSize: 70,
+						horizontalAlign: "center",
+						text: moisture,
+						verticalAlign: "center"
+					},
+					toolTip: {
+						backgroundColor: "#ffffff",
+						borderThickness: 0,
+						cornerRadius: 0,
+						fontColor: "#424242"
+					},
+					data: [
+						{
+							explodeOnClick: false,
+							innerRadius: "96%",
+							radius: "90%",
+							startAngle: 270,
+							type: "doughnut",
+							dataPoints: [
+								{ y: moisture, color: "#c70000", toolTipContent: "Methane"},
+								{ y: moisture, color: "#424242", toolTipContent: null }
+							]
+						}
+					]
+				});
+
+				var x1= Math.floor(Math.random() * 100);
+				var salesDoughnutChartNL = new CanvasJS.Chart("sales-doughnut-chart-nl", { 
+					animationEnabled: true,
+					backgroundColor: "transparent",
+					title: {
+						fontColor: "#848484",
+						fontSize: 70,
+						horizontalAlign: "center",
+						text: co,
+						verticalAlign: "center"
+					},
+					toolTip: {
+						backgroundColor: "#ffffff",
+						borderThickness: 0,
+						cornerRadius: 0,
+						fontColor: "#424242"
+					},
+					data: [
+						{
+							explodeOnClick: false,
+							innerRadius: "96%",
+							radius: "90%",
+							startAngle: 270,
+							type: "doughnut",
+							dataPoints: [
+								{ y: v, color: "#c70000", toolTipContent: "CO"},
+								{ y: x123, color: "#424242", toolTipContent: null }
+							]
+						}
+					]
+				});
+
+				var x2= Math.floor(Math.random() * 100);
+				var salesDoughnutChartDE = new CanvasJS.Chart("sales-doughnut-chart-de", { 
+					animationEnabled: true,
+					backgroundColor: "transparent",
+					title: {
+						fontColor: "#848484",
+						fontSize: 70,
+						horizontalAlign: "center",
+						text: "",
+						verticalAlign: "center"
+					},
+					toolTip: {
+						backgroundColor: "#ffffff",
+						borderThickness: 0,
+						cornerRadius: 0,
+						fontColor: "#424242"
+					},
+					data: [
+						{
+							explodeOnClick: false,
+							innerRadius: "96%",
+							radius: "90%",
+							startAngle: 270,
+							type: "doughnut",
+							dataPoints: [
+								{ y: smoke, color: "#c70000", toolTipContent: "Smoke"},
+								{ y: smoke, color: "#424242", toolTipContent: null }
+							]
+						}
+					]
+				});
+
+				var x3= Math.floor(Math.random() * 100);
+				var salesDoughnutChartUS1 = new CanvasJS.Chart("sales-doughnut-chart-us1", { 
+					animationEnabled: true,
+					backgroundColor: "transparent",
+					title: {
+						fontColor: "#848484",
+						fontSize: 70,
+						horizontalAlign: "center",
+						text: 34	,
+						verticalAlign: "center"
+					},
+					toolTip: {
+						backgroundColor: "#ffffff",
+						borderThickness: 0,
+						cornerRadius: 0,
+						fontColor: "#424242"
+					},
+					data: [
+						{
+							explodeOnClick: false,
+							innerRadius: "96%",
+							radius: "90%",
+							startAngle: 270,
+							type: "doughnut",
+							dataPoints: [
+								{ y: x3, color: "#c70000", toolTipContent: "Temperature"},
+								{ y: 53, color: "#424242", toolTipContent: null }
+							]
+						}
+					]
+				});
+
+				var x4= Math.floor(Math.random() * 100);
+				var salesDoughnutChartNL1 = new CanvasJS.Chart("sales-doughnut-chart-nl1", { 
+					animationEnabled: true,
+					backgroundColor: "transparent",
+					title: {
+						fontColor: "#848484",
+						fontSize: 70,
+						horizontalAlign: "center",
+						text: x4,
+						verticalAlign: "center"
+					},
+					toolTip: {
+						backgroundColor: "#ffffff",
+						borderThickness: 0,
+						cornerRadius: 0,
+						fontColor: "#424242"
+					},
+					data: [
+						{
+							explodeOnClick: false,
+							innerRadius: "96%",
+							radius: "90%",
+							startAngle: 270,
+							type: "doughnut",
+							dataPoints: [
+								{ y: x4, color: "#c70000", toolTipContent: "Humidity"},
+								{ y: 81, color: "#424242", toolTipContent: null }
+							]
+						}
+					]
+				});
+
+				var x5= Math.floor(Math.random() * 100);
+				var salesDoughnutChartDE1 = new CanvasJS.Chart("sales-doughnut-chart-de1", { 
+					animationEnabled: true,
+					backgroundColor: "transparent",
+					title: {
+						fontColor: "#848484",
+						fontSize: 70,
+						horizontalAlign: "center",
+						text: x5,
+						verticalAlign: "center"
+					},
+					toolTip: {
+						backgroundColor: "#ffffff",
+						borderThickness: 0,
+						cornerRadius: 0,
+						fontColor: "#424242"
+					},
+					data: [
+						{
+							explodeOnClick: false,
+							innerRadius: "96%",
+							radius: "90%",
+							startAngle: 270,
+							type: "doughnut",
+							dataPoints: [
+								{ y: x5, color: "#c70000", toolTipContent: "Soil Moisture"},
+								{ y: 88, color: "#424242", toolTipContent: null }
+							]
+						}
+					]
+				});
+
+				jQuery.scrollSpeed(100, 400); // for smooth mouse wheel scrolling
+				
+				// jQuery.inview plugin
+				$('.inview').one('inview', function (e, isInView) {
+					if (isInView) {
+						switch (this.id) {
+							case "sales-doughnut-chart-us": salesDoughnutChartUS.render();
+								break;
+							case "sales-doughnut-chart-nl": salesDoughnutChartNL.render();
+								break;
+							case "sales-doughnut-chart-de": salesDoughnutChartDE.render();
+								break;
+							case "sales-doughnut-chart-us1": salesDoughnutChartUS1.render();
+								break;
+							case "sales-doughnut-chart-nl1": salesDoughnutChartNL1.render();
+								break;
+							case "sales-doughnut-chart-de1": salesDoughnutChartDE1.render();
+								break;
+						}
+					}
+				});
+		
+			});*/
+        
+function hitapi()
+{ const options = {
+  method: 'POST',
+  req_data: {
+    {
+	"pH" : document.getElementById("ph"),
+	"rainfall" : document.getElementById("rainfall"),
+	"N":document.getElementById("n"),
+	"P": document.getElementById("p"),
+	"K" : document.getElementById("k")
+}
+  },
+  credentials: 'include',
+  headers: {}
+};
+fetch('0.0.0.0:5555/crop', options)
+  .then((response) => {
+    return response.json();
+  })
+  .then((jsonObject) => {
+  console.log(jsonObject)
+    document.write(`ID ${jsonObject.id} was created!`);
+  })
+  hitapi1();
+  .catch((error) => {
+    document.write(error);
+  });}
+
+  function hitapi1()
+{ const options = {
+  method: 'POST',
+  req_data: {
+    {
+	"pH" : document.getElementById("ph"),
+	"rainfall" : document.getElementById("rainfall"),
+	"N":document.getElementById("n"),
+	"P": document.getElementById("p"),
+	"K" : document.getElementById("k")
+}
+  },
+  credentials: 'include',
+  headers: {}
+};
+fetch('0.0.0.0:5555/fertilizier', options)
+  .then((response) => {
+    return response.json();
+  })
+  .then((jsonObject) => {
+  console.log(jsonObject)
+    document.write(`ID ${jsonObject.id} was created!`);
+  })
+  .catch((error) => {
+    document.write(error);
+  });}
+
+</script>
+		
+  </head>
+  <body>
+		<div class="container">
+			<h1>Harvestify - Dashboard</h1>
+			<hr class="m-t-2">
+			
+			<h3>Gas Sensor Values</h3>
+			
+			<!-- sales doughnut charts -->
+			<div class="row">	
+				<div class="col-md-4">
+					<div class="inview" id="sales-doughnut-chart-us"></div>
+                    <br>
+                    <script>
+                    document.write("",methane);</script>
+					<h3 class="align-center">Methane</h3>
+				</div>
+				
+				<div class="col-md-4">
+					<div class="inview" id="sales-doughnut-chart-nl"></div>
+                    <br>
+                    <script>document.write("",co);</script>
+					<h3 class="align-center">CO</h3>
+				</div>
+				
+				<div class="col-md-4">
+					<div class="inview" id="sales-doughnut-chart-de"></div>
+                    <br>
+                    <script>document.write("",smoke);</script>
+					<h3 class="align-center">Smoke</h3>
+				</div>
+			</div>
+			
+	
+			<hr class="m-t-2">
+			
+			<h3>Other Sensor Values</h3>
+			
+			
+			<div class="row">	
+				<div class="col-md-4">
+					<div class="inview" id="sales-doughnut-chart-us1"></div>
+                    <br>
+                    <script>document.write("",voltage);</script>
+					<h3 class="align-center">Volatge</h3>
+				</div>
+				
+				<div class="col-md-4">
+					<div class="inview" id="sales-doughnut-chart-nl1"></div>
+                    <br>
+                    <script>document.write(moisture);</script>
+					<h3 class="align-center">Moisture</h3>
+				</div>
+				
+				<div class="col-md-4">
+					<div class="inview" id="sales-doughnut-chart-de1"></div>
+                    <br>
+                    <script>temp=32;
+                    document.write(temp);</script>
+					<h3 class="align-center">Temperature</h3>
+				</div>
+			</div>
+			<hr class="m-t-2">
+			
+			
+		</div> <!-- container -->
+
+		<div class="col-sm-9 col-md-6 col-lg-8">
+
+		
+            <h3>&nbsp&nbsp&nbsp&nbspEnter N, P, K and pH Values</h3>
+            <form method="POST">
+             
+			  &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="n" name="N" placeholder="Nitrogen">
+              <br>
+          
+     
+              &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="p" name="P" placeholder="Phosphorous">
+              <br>
+              
+           
+			  &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="k" name="K" placeholder="Potassium">
+              <br>
+          
+ 
+              &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="ph" name="pH" placeholder="pH Value">
+			  <br>
+			  
+			  &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="rainfall" name="rainfall" placeholder="Rainfall">
+              <br>
+            
+              &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="submit" onclick="hitapi()" value="Submit">
+            </form>
+		  </div>
+
+		  <div class="col-sm-3 col-md-6 col-lg-4"> Test</div>
+		  
+</body>
+</html>
